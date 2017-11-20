@@ -4,9 +4,13 @@ This is a humble fork in order to add specific funcionality to ClickHouse/MySQL 
 
 	git clone --recursive git@github.com:xue2sheng/ClickHouse.git
 
-A way to get info on build options could be:
+A way to get info on server build options could be:
 
 	clickhouse-client --query="select * from system.build_options"
+
+Or just full version on local client binary:
+
+	 strings /usr/bin/clickhouse-client | grep "^ClickHouse 1.1"
 
 # Original info
 

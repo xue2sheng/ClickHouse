@@ -1,12 +1,12 @@
 # This strings autochanged from release_lib.sh:
-set(VERSION_DESCRIBE v1.1.54312-testing)
+set(VERSION_DESCRIBE v1.1.54312.1-testing)
 set(VERSION_REVISION 54312)
 # end of autochange
 
 set (VERSION_MAJOR 1)
 set (VERSION_MINOR 1)
 set (VERSION_PATCH ${VERSION_REVISION})
-set (VERSION_EXTRA "")
+set (VERSION_EXTRA "-forked")
 set (VERSION_TWEAK "1")
 
 set (VERSION_STRING "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}")
