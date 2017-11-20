@@ -8,7 +8,11 @@ A way to get info on server build options could be:
 
 	clickhouse-client --query="select * from system.build_options"
 
-Or just full version on local client binary:
+Or using HTTP protocol:
+
+	echo 'select * from system.build_options' | curl 'http://localhost:8123/' --data-binary @-
+
+For just full version on local client binary:
 
 	 strings /usr/bin/clickhouse-client | grep "^ClickHouse 1.1"
 
