@@ -171,12 +171,12 @@ private:
 
         if (config().has("config-file"))
             loadConfiguration(config().getString("config-file"));
-        else if (Poco::File("./clickhouse-client.xml").exists())
-            loadConfiguration("./clickhouse-client.xml");
-        else if (!home_path.empty() && Poco::File(home_path + "/.clickhouse-client/config.xml").exists())
-            loadConfiguration(home_path + "/.clickhouse-client/config.xml");
-        else if (Poco::File("/etc/clickhouse-client/config.xml").exists())
-            loadConfiguration("/etc/clickhouse-client/config.xml");
+        else if (Poco::File("./clickhouse-proxy.xml").exists())
+            loadConfiguration("./clickhouse-proxy.xml");
+        else if (!home_path.empty() && Poco::File(home_path + "/.clickhouse-proxy/config.xml").exists())
+            loadConfiguration(home_path + "/.clickhouse-proxy/config.xml");
+        else if (Poco::File("/etc/clickhouse-proxy/config.xml").exists())
+            loadConfiguration("/etc/clickhouse-proxy/config.xml");
 
         context.setApplicationType(Context::ApplicationType::CLIENT);
 
@@ -340,7 +340,7 @@ private:
             if (config().has("history_file"))
                 history_file = config().getString("history_file");
             else if (!home_path.empty())
-                history_file = home_path + "/.clickhouse-client-history";
+                history_file = home_path + "/.clickhouse-proxy-history";
 
             if (!history_file.empty())
             {
@@ -498,7 +498,7 @@ private:
                 catch (const Exception & e)
                 {
                     std::cerr << std::endl
-                        << "Exception on client:" << std::endl
+                        << "Exception on proxy:" << std::endl
                         << "Code: " << e.code() << ". " << e.displayText() << std::endl
                         << std::endl;
 
