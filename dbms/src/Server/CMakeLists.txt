@@ -29,6 +29,10 @@ add_library (clickhouse-client Client.cpp)
 target_link_libraries (clickhouse-client dbms clickhouse_functions clickhouse_aggregate_functions ${LINE_EDITING_LIBS} ${Boost_PROGRAM_OPTIONS_LIBRARY})
 install (FILES clickhouse-client.xml DESTINATION ${CLICKHOUSE_ETC_DIR}/clickhouse-client COMPONENT clickhouse-client RENAME config.xml)
 
+add_library (clickhouse-proxy Proxy.cpp)
+target_link_libraries (clickhouse-proxy dbms clickhouse_functions clickhouse_aggregate_functions ${LINE_EDITING_LIBS} ${Boost_PROGRAM_OPTIONS_LIBRARY})
+install (FILES clickhouse-proxy.xml DESTINATION ${CLICKHOUSE_ETC_DIR}/clickhouse-proxy COMPONENT clickhouse-proxy RENAME config.xml)
+
 add_library (clickhouse-benchmark Benchmark.cpp)
 target_link_libraries (clickhouse-benchmark dbms ${Boost_PROGRAM_OPTIONS_LIBRARY})
 target_include_directories (clickhouse-benchmark PRIVATE ${PCG_RANDOM_INCLUDE_DIR})
@@ -52,6 +56,7 @@ target_include_directories(clickhouse BEFORE PRIVATE ${COMMON_INCLUDE_DIR})
 target_link_libraries(clickhouse
     clickhouse-server
     clickhouse-client
+    clickhouse-proxy
     clickhouse-local
     clickhouse-benchmark
     clickhouse-performance-test
@@ -73,6 +78,7 @@ endmacro(install_symlink_to_clickhouse)
 
 install_symlink_to_clickhouse(clickhouse-server)
 install_symlink_to_clickhouse(clickhouse-client)
+install_symlink_to_clickhouse(clickhouse-proxy)
 install_symlink_to_clickhouse(clickhouse-local)
 install_symlink_to_clickhouse(clickhouse-benchmark)
 install_symlink_to_clickhouse(clickhouse-performance-test)

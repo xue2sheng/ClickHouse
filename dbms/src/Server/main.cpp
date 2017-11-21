@@ -12,6 +12,7 @@
 /// Universal executable for various clickhouse applications
 int mainEntryClickHouseServer(int argc, char ** argv);
 int mainEntryClickHouseClient(int argc, char ** argv);
+int mainEntryClickHouseProxy(int argc, char ** argv);
 int mainEntryClickHouseLocal(int argc, char ** argv);
 int mainEntryClickHouseBenchmark(int argc, char ** argv);
 int mainEntryClickHousePerformanceTest(int argc, char ** argv);
@@ -35,6 +36,7 @@ std::pair<const char *, MainFunc> clickhouse_applications[] =
 {
     {"local", mainEntryClickHouseLocal},
     {"client", mainEntryClickHouseClient},
+    {"proxy", mainEntryClickHouseProxy},
     {"benchmark", mainEntryClickHouseBenchmark},
     {"server", mainEntryClickHouseServer},
     {"performance-test", mainEntryClickHousePerformanceTest},
