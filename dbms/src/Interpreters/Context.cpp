@@ -930,6 +930,11 @@ String Context::getCurrentDatabase() const
     return current_database;
 }
 
+String Context::getCurrentCommand() const
+{
+    auto lock = getLock();
+    return current_command;
+}
 
 String Context::getCurrentQueryId() const
 {
@@ -943,6 +948,12 @@ void Context::setCurrentDatabase(const String & name)
     auto lock = getLock();
     assertDatabaseExists(name);
     current_database = name;
+}
+
+void Context::setCurrentCommand(const String & name)
+{
+    auto lock = getLock();
+    current_command = name;
 }
 
 

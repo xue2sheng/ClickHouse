@@ -6,6 +6,7 @@
 #include <Parsers/ParserRenameQuery.h>
 #include <Parsers/ParserOptimizeQuery.h>
 #include <Parsers/ParserUseQuery.h>
+#include <Parsers/ParserExecuteQuery.h>
 #include <Parsers/ParserSetQuery.h>
 #include <Parsers/ParserAlterQuery.h>
 #include <Parsers/ParserSystemQuery.h>
@@ -20,6 +21,7 @@ bool ParserQuery::parseImpl(Pos & pos, ASTPtr & node, Expected & expected)
     ParserQueryWithOutput query_with_output_p;
     ParserInsertQuery insert_p(end);
     ParserUseQuery use_p;
+    ParserExecuteQuery execute_p;
     ParserSetQuery set_p;
     ParserOptimizeQuery optimize_p;
     ParserSystemQuery system_p;
@@ -27,6 +29,7 @@ bool ParserQuery::parseImpl(Pos & pos, ASTPtr & node, Expected & expected)
     bool res = query_with_output_p.parse(pos, node, expected)
         || insert_p.parse(pos, node, expected)
         || use_p.parse(pos, node, expected)
+        || execute_p.parse(pos, node, expected)
         || set_p.parse(pos, node, expected)
         || optimize_p.parse(pos, node, expected)
         || system_p.parse(pos, node, expected);
