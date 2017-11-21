@@ -13,4 +13,7 @@
             </invalidCertificateHandler>
         </client>
     </openSSL>
+    <proxy>
+	<message>Extended client version.</message>
+    </proxy>
 </config>

@@ -1177,6 +1177,10 @@ private:
             << "." << DBMS_VERSION_MINOR
             << "." << ClickHouseRevision::get()
             << "." << std::endl;
+
+        if( config().has("proxy.message") ) {
+            std::cout << config().getString("proxy.message") << std::endl;
+        }
     }
 
 public:
