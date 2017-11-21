@@ -36,6 +36,7 @@
 #include <Parsers/ParserQuery.h>
 #include <Parsers/ASTSetQuery.h>
 #include <Parsers/ASTUseQuery.h>
+#include <Parsers/ASTExecuteQuery.h>
 #include <Parsers/ASTInsertQuery.h>
 #include <Parsers/ASTSelectQuery.h>
 #include <Parsers/ASTQueryWithOutput.h>
@@ -81,6 +82,23 @@ namespace ErrorCodes
     extern const int CLIENT_OUTPUT_FORMAT_SPECIFIED;
 }
 
+class ProxyCommand {
+public:
+    ProxyCommand(const String& command);
+    bool properCommand() const;
+private:
+    String command;
+};
+
+ProxyCommand::ProxyCommand(const String& _command) {
+    if( ! _command.empty() ) {
+        command = _command;
+    }
+}
+
+bool ProxyCommand::properCommand() const {
+    return ! command.empty();
+}
 
 class Proxy : public Poco::Util::Application
 {
@@ -634,12 +652,26 @@ private:
         /// INSERT query for which data transfer is needed (not an INSERT SELECT) is processed separately.
         const ASTInsertQuery * insert = typeid_cast<const ASTInsertQuery *>(&*parsed_query);
 
+        /// specific of this PROXY binary: EXECUTE commands are supposed to be processed locally here.
+        const ASTExecuteQuery * execute_query = typeid_cast<const ASTExecuteQuery *>(&*parsed_query);
+
         connection->forceConnected();
 
-        if (insert && !insert->select)
-            processInsertQuery();
-        else
-            processOrdinaryQuery();
+        if (execute_query) {
+
+            ProxyCommand cmd {execute_query->command};
+            if( cmd.properCommand() ) {
+                std::cout << "Proxy command: " << execute_query->command << std::endl;
+            }
+
+        } else {
+
+            if (insert && !insert->select)
+                processInsertQuery();
+            else
+                processOrdinaryQuery();
+
+        }
 
         /// Do not change context (current DB, settings) in case of an exception.
         if (!got_exception)
